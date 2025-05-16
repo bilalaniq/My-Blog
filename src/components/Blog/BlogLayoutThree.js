@@ -3,14 +3,11 @@ import React from "react";
 import Image from "next/image";
 import { format } from "date-fns";
 
-function BlogLayoutTwo({ blog }) {
+function BlogLayoutThree({ blog }) {
   const imagePath = blog.image?.filePath?.replace("../public", "") || "";
   return (
-    <div className="group grid grid-cols-12  gap-4 items-center text-dark">
-      <Link
-        href={blog.url}
-        className="col-span-4 h-full rounded-xl overflow-hidden"
-      >
+    <div className="group flex flex-col items-center text-dark">
+      <Link href={blog.url} className="h-full rounded-xl overflow-hidden">
         <Image
           src={imagePath}
           placeholder="blur"
@@ -18,12 +15,12 @@ function BlogLayoutTwo({ blog }) {
           alt={blog.title || "Cover Image"}
           width={blog.image?.width}
           height={blog.image?.height}
-          className="aspect-square w-full h-full object-cover object-center group-hover:scale-105 transition-all
+          className="aspect-[4/3] w-full h-full object-cover object-center group-hover:scale-105 transition-all
           duration-300"
         />
       </Link>
 
-      <div className="col-span-8 w-full">
+      <div className="flex flex-col mt-4 w-full">
         <span className="uppercase text-accent font-semibold text-sm">
           {" "}
           {blog.tags[0]}{" "}
@@ -45,4 +42,4 @@ function BlogLayoutTwo({ blog }) {
   );
 }
 
-export default BlogLayoutTwo;
+export default BlogLayoutThree;
