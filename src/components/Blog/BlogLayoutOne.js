@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 function BlogLayoutOne({ blog }) {
+  if (!blog) return null;
   const imagePath = blog.image?.filePath?.replace("../public", "") || "";
 
   return (
@@ -28,15 +29,16 @@ function BlogLayoutOne({ blog }) {
           name={blog.tags?.[0] || "Uncategorized"}
           className="px-6 text-sm py-2 !border"
         />
-        <Link href={blog.url || "#"} className="mt-6" />
-        <h2 className="font-bold capitalize text-2xl text-light mt-4 ">
-          <span
-            className="bg-gradient-to-r from-accent to-accent bg-[length:0px_6px] group-hover:bg-[length:100%_6px] bg-left-bottom
+        <Link href={blog.url || "#"} className="mt-6">
+          <h2 className="font-bold capitalize text-2xl text-light mt-4 ">
+            <span
+              className="bg-gradient-to-r from-accent to-accent bg-[length:0px_6px] group-hover:bg-[length:100%_6px] bg-left-bottom
                      bg-no-repeat transition-[background-size] duration-500"
-          >
-            {blog.title}
-          </span>
-        </h2>
+            >
+              {blog.title}
+            </span>
+          </h2>
+        </Link>
       </div>
     </div>
   );

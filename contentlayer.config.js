@@ -1,8 +1,13 @@
 import { makeSource, defineDocumentType } from "@contentlayer/source-files";
+import readingTime from "reading-time";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeSlug from "rehype-slug";
+import remarkGfm from "remark-gfm";
 
 const Blog = defineDocumentType(() => ({
   name: "Blog",
   filePathPattern: "**/*.mdx",
+  contentType: "mdx",
   fields: {
     title: {
       type: "string",
@@ -40,7 +45,11 @@ const Blog = defineDocumentType(() => ({
   computedFields: {
     url: {
       type: "string",
-      resolve: (doc) => `/blog/${doc._raw.flattenedPath}`,
+      resolve: (doc) => `/blogs/${doc._raw.flattenedPath}`,
+    },
+    readingTime: {
+      type: "json",
+      resolve: (doc) => readingTime(doc.body.raw || ""),
     },
   },
 }));
@@ -48,4 +57,13 @@ const Blog = defineDocumentType(() => ({
 export default makeSource({
   contentDirPath: "content",
   documentTypes: [Blog],
+  mdx: {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [rehypeSlug , rehypeAutolinkHeadings],
+  },
 });
+
+//remark is an md parser that parses the mdx file into an ast
+//rehype is an html parser that parses the ast into html
+
+// they are used to add plugins to the mdx file

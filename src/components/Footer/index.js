@@ -2,6 +2,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { LinkedinIcon, GithubIcon, InstagramIcon } from "../icons";
+import Link from "next/link";
 
 const Footer = () => {
   const {
@@ -29,7 +30,7 @@ const Footer = () => {
           type="email"
           placeholder="Enter your email"
           {...register("email", { required: "Email is required" })}
-          className="bg-transparent w-full text-dark focus:border-dark focus:ring-0 border-0 border-b  mr-2 pd-1"
+          className="bg-transparent w-full pl-0 text-dark focus:border-dark focus:ring-0 border-0 border-b  mr-2 pd-1"
         />
         {errors.email && (
           <span className="text-red-500 text-sm">{errors.email.message}</span>
@@ -64,10 +65,24 @@ const Footer = () => {
           rel="noopener noreferrer"
           className="transition-transform transform hover:scale-125"
         >
-          {/* <InstagramIcon className="w-5.5 h-5.5 "/> */}
           <InstagramIcon style={{ width: "45px", height: "45px" }} />
-
         </a>
+      </div>
+
+      <div className="mt-24 w-full relative font-medium border-t border-solid border-light py-6 px-8">
+        <div className="flex flex-col md:flex-row items-center justify-between w-full text-center gap-4">
+          <span className="md:text-left w-full md:w-1/3">
+            &copy; {new Date().getFullYear()} Bilal. All rights reserved.
+          </span>
+
+          <Link href="/sitemap.xml" className="underline w-full md:w-1/3">
+            sitemap.xml
+          </Link>
+
+          <div className="md:text-right w-full md:w-1/3">
+            Made with &hearts; by Bilal
+          </div>
+        </div>
       </div>
     </footer>
   );
