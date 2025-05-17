@@ -1,6 +1,7 @@
 import { makeSource, defineDocumentType } from "@contentlayer/source-files";
 import readingTime from "reading-time";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 
@@ -54,12 +55,20 @@ const Blog = defineDocumentType(() => ({
   },
 }));
 
+const codeOptions = {
+  theme: "github-dark",
+};
+
 export default makeSource({
   contentDirPath: "content",
   documentTypes: [Blog],
   mdx: {
     remarkPlugins: [remarkGfm],
-    rehypePlugins: [rehypeSlug , rehypeAutolinkHeadings],
+    rehypePlugins: [
+      rehypeSlug,
+      [rehypeAutolinkHeadings, { behavior: "append" }],
+      [rehypePrettyCode, { codeOptions }],
+    ],
   },
 });
 
@@ -67,3 +76,8 @@ export default makeSource({
 //rehype is an html parser that parses the ast into html
 
 // they are used to add plugins to the mdx file
+
+//rehypeSlug is used to add ids to the headings in the mdx file
+//rehypeAutolinkHeadings is used to add links to the headings in the mdx file
+
+//remarkGfm is used to add support for github flavored markdown
