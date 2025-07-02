@@ -1,9 +1,11 @@
 import { makeSource, defineDocumentType } from "@contentlayer/source-files";
+// import { Life_Savers } from "next/font/google";
 import readingTime from "reading-time";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
+import GithubSlugger from "github-slugger";
 
 const Blog = defineDocumentType(() => ({
   name: "Blog",
@@ -52,12 +54,47 @@ const Blog = defineDocumentType(() => ({
       type: "json",
       resolve: (doc) => readingTime(doc.body.raw || ""),
     },
+    toc: {
+      type: "json",
+      resolve: async (doc) => {
+        const regularExp = /\n(?<flag>#{1,6})\s+(?<content>.+)/g;
+        const slugger = new GithubSlugger();
+
+        const headings = Array.from(doc.body.raw.matchAll(regularExp)).map(
+          (match) => {
+            const flag = match.groups?.flag;
+            const content = match.groups?.content;
+
+            return {
+              level:
+                flag?.length === 1
+                  ? "one"
+                  : flag?.length === 2
+                  ? "two"
+                  : flag?.length === 3
+                  ? "three"
+                  : flag?.length === 4
+                  ? "four"
+                  : flag?.length === 5
+                  ? "five"
+                  : "six",
+              text: content,
+              slug: content ? slugger.slug(content) : undefined,
+            };
+          }
+        );
+
+        return headings;
+      },
+    },
   },
 }));
 
 const codeOptions = {
   theme: "github-dark",
 };
+
+// for more themes go to https://rehype-pretty.pages.dev/
 
 export default makeSource({
   contentDirPath: "content",
