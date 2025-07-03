@@ -2,6 +2,8 @@ import { allBlogs } from "@/.contentlayer/generated";
 import Blogdetails from "@/src/components/Blog/Blogdetails";
 import RenderMdx from "@/src/components/Blog/RenderMdx";
 import { Tag } from "@/src/components/Elements/Tags";
+
+
 import Image from "next/image";
 
 export default function BlogPage({ params }) {
