@@ -2,9 +2,21 @@ import { allBlogs } from "@/.contentlayer/generated";
 import Blogdetails from "@/src/components/Blog/Blogdetails";
 import RenderMdx from "@/src/components/Blog/RenderMdx";
 import { Tag } from "@/src/components/Elements/Tags";
-
-
 import Image from "next/image";
+
+
+// The generateStaticParams function can be used in combination with dynamic route segments to statically
+// generate routes at build time instead of on-demand at request time.
+
+// because in our blog we donot have dynamic blogs, we can generate static params which will help in performance
+
+export async function generateStaticParams() {
+  return allBlogs.map((blog) => {
+    {
+      slug: blog._raw.flattenedPath;
+    }
+  });
+}
 
 export default function BlogPage({ params }) {
   const blog = allBlogs.find((blog) => blog._raw.flattenedPath === params.slug);
