@@ -2,8 +2,9 @@ import { format, parseISO } from "date-fns";
 import Link from "next/link";
 import React from "react";
 import { slug as slugify } from "github-slugger"; // renamed to avoid conflict
+import ViewCounter from "./ViewCounter";
 
-const Blogdetails = ({ blog }) => {
+const Blogdetails = ({ blog  , slug:blogslug}) => {
   const tag = blog?.tags?.[0] || "uncategorized"; // fallback if tag is missing
 
   return (
@@ -12,7 +13,9 @@ const Blogdetails = ({ blog }) => {
         {format(parseISO(blog.publishedAt), "LLLL d, yyyy")}
       </time>
 
-      <span className="m-3">10 views</span>
+      <span className="m-3">
+        <ViewCounter slug={blogslug}/>
+      </span>
 
       <div className="m-3">{blog.readingTime?.text}</div>
 

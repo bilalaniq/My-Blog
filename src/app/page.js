@@ -1,7 +1,7 @@
-import { allBlogs } from "@/.contentlayer/generated";
 import { HomeCoverSection } from "../components/Home/HomeCoverSection";
 import { Featuredposts } from "../components/Home/Featuredposts";
 import { Recentposts } from "../components/Home/Recentposts";
+import { allBlogs } from "@/.contentlayer/generated";
 
 export default function Home() {
   return (
