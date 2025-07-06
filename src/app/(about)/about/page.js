@@ -1,6 +1,14 @@
 import Link from "next/link";
 import AboutCoverSection from "@/src/components/About/AboutCoverSection";
-import Skills from "@/src/components/About/skills";
+import Skills from "@/src/components/About/Skills";
+
+// we woold not use generateMetadata() here because we are not using dynamic routes, so we can just use Metadata object
+
+//should be lower case
+export const metadata = {
+  title: "About Me",
+  description: `Here you can find out more about me, my skills, and my projects.`,
+};
 
 export default function page() {
   return (

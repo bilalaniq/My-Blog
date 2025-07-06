@@ -31,6 +31,15 @@ export async function generateStaticParams() {
   return path;
 }
 
+export async function generateMetadata({ params }) {
+  return {
+    title: `${params.slug.replaceAll("-", " ")} Blogs`,
+    description: `Learn more about ${
+      params.slug === "all" ? "Cyber Security" : params.slug
+    } through our collection of expert blogs.`,
+  };
+}
+
 const Categorypage = ({ params }) => {
   const allCategories = ["all"];
 

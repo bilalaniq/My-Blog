@@ -3,6 +3,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { LinkedinIcon, GithubIcon, InstagramIcon } from "../icons";
 import Link from "next/link";
+import siteMetadata from "@/src/utils/siteMetadata";
 
 const Footer = () => {
   const {
@@ -44,7 +45,7 @@ const Footer = () => {
 
       <div className="flex items-center mt-8 gap-x-4">
         <a
-          href="https://www.linkedin.com/in/muhammad-bilal-b159a5292/"
+          href={siteMetadata.linkedin}
           target="_blank"
           rel="noopener noreferrer"
           className="transition-transform transform hover:scale-125"
@@ -52,7 +53,7 @@ const Footer = () => {
           <LinkedinIcon className="w-6 h-6" />
         </a>
         <a
-          href="https://github.com/bilalaniq"
+          href={siteMetadata.github}
           target="_blank"
           rel="noopener noreferrer"
           className="transition-transform transform hover:scale-125"
@@ -60,7 +61,7 @@ const Footer = () => {
           <GithubIcon className="w-6 h-6 fill-light" />
         </a>
         <a
-          href="https://www.instagram.com/bilalaniq4/"
+          href={siteMetadata.instagram}
           target="_blank"
           rel="noopener noreferrer"
           className="transition-transform transform hover:scale-125"

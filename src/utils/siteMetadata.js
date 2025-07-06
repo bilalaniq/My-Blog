@@ -10,7 +10,7 @@ const siteMetadata = {
   siteUrl: "https://NULLSECT.com", // your website URL
   siteLogo: "/logo.png",
   socialBanner: "/NULLSECT.png", // add social banner in the public folder
-  email: "codebucks27@gmail.com",
+  email: "bilalaniq2@gmail.com",
   github: "https://github.com/bilalaniq",
   linkedin: "https://www.linkedin.com/in/muhammad-bilal-b159a5292/",
   instagram: "https://www.instagram.com/bilalaniq4/",

@@ -1,5 +1,15 @@
 import ContactForm from "@/src/components/Contact/ContactForm";
 import LottieAnimation from "@/src/components/Contact/lottieanimation";
+import siteMetadata from "@/src/utils/siteMetadata";
+
+// we woold not use generateMetadata() here because we are not using dynamic routes, so we can just use Metadata object
+
+//should be lower case
+export const metadata =  {
+  title: "Contact Me",
+  description: `contact me for any queries or projects related to Cyber Security, Web Development, or AI. 
+  Conect me through this form or email me at ${siteMetadata.email}`,
+};
 
 export default function contact() {
   return (

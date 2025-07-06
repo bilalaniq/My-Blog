@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Logo from "./logo";
 import { LinkedinIcon, GithubIcon, InstagramIcon, SunIcon } from "../icons";
+import siteMetadata from "@/src/utils/siteMetadata";
 
 const Header = () => {
   return (
@@ -25,19 +26,19 @@ const Header = () => {
       </nav>
       <div>
         <a
-          href="https://www.linkedin.com/in/muhammad-bilal-b159a5292/"
+          href={siteMetadata.linkedin}
           className="inline-block w-6 h-6 mr-4"
         >
           <LinkedinIcon className="hover:scale-125 transition-all ease duration-200" />
         </a>
         <a
-          href="https://github.com/bilalaniq"
+          href={siteMetadata.github}
           className="inline-block w-6 h-6 mr-4"
         >
           <GithubIcon className="hover:scale-125 transition-all ease duration-200" />
         </a>
         <a
-          href="https://www.instagram.com/bilalaniq4/"
+          href={siteMetadata.instagram}
           className="inline-block w-6 h-6 mr-4"
         >
           <InstagramIcon className="hover:scale-125 transition-all ease duration-200" />

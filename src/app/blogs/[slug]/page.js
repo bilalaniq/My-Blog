@@ -2,8 +2,8 @@ import { allBlogs } from "@/.contentlayer/generated";
 import Blogdetails from "@/src/components/Blog/Blogdetails";
 import RenderMdx from "@/src/components/Blog/RenderMdx";
 import { Tag } from "@/src/components/Elements/Tags";
+import siteMetadata, { description } from "@/src/utils/siteMetadata";
 import Image from "next/image";
-
 
 // The generateStaticParams function can be used in combination with dynamic route segments to statically
 // generate routes at build time instead of on-demand at request time.
@@ -16,6 +16,65 @@ export async function generateStaticParams() {
       slug: blog._raw.flattenedPath;
     }
   });
+}
+
+export async function generateMetadata({ params }) {
+  const blog = allBlogs.find((blog) => blog._raw.flattenedPath === params.slug);
+
+  if (!blog) {
+    return;
+  }
+
+  const publishedAt = new Date(blog.publishedAt).toISOString();
+  const modifiedAt = new Date(blog.updatedAt || blog.publishedAt).toISOString();
+
+  let imageList = [siteMetadata.socialBanner];
+
+  if (blog.image) {
+    if (typeof blog.image === "string") {
+      imageList = [siteMetadata.url + blog.image.replace("../public", "")];
+    } else if (Array.isArray(blog.image)) {
+      imageList = blog.image;
+    } else if (blog.image?.filePath) {
+      imageList = [
+        siteMetadata.url + blog.image.filePath.replace("../public", ""),
+      ];
+    }
+  }
+
+  const ogImage = imageList.map((img) => {
+    return {
+      url: img.includes("http") ? img : siteMetadata.url + img,
+      width: 1200,
+      height: 630,
+    };
+  });
+
+  const author = blog?.author ? [blog.author] : siteMetadata.author;
+
+  return {
+    title: blog.title,
+    description: blog.description,
+
+    openGraph: {
+      title: blog.title,
+      description: blog.description,
+      url: siteMetadata.url + blog.url,
+      siteName: siteMetadata.title,
+      locale: "en_US",
+      type: "article",
+      publishTime: publishedAt,
+      modifiedTime: modifiedAt,
+      images: ogImage,
+      authors: author.length > 0 ? author : siteMetadata.author,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: blog.title,
+      description: blog.description,
+      images: ogImage.map((img) => img.url),
+    },
+  };
 }
 
 export default function BlogPage({ params }) {
