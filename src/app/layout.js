@@ -5,6 +5,7 @@ import Header from "@/src/components/Header";
 import Footer from "@/src/components/Footer";
 import { cx } from "@/src/utils";
 import siteMetadata from "../utils/siteMetadata";
+import Script from "next/script";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -46,7 +47,7 @@ export const metadata = {
     title: siteMetadata.title,
     description: siteMetadata.description,
     images: [siteMetadata.socialBanner || siteMetadata.siteLogo],
-    creator: siteMetadata.twitter || undefined, 
+    creator: siteMetadata.twitter || undefined,
   },
   robots: {
     index: true,
@@ -69,9 +70,27 @@ export default function RootLayout({ children }) {
         className={cx(
           inter.variable,
           manrope.variable,
-          "font-mr bg-light text-dark"
+          "font-mr bg-light dark:bg-dark"
         )}
       >
+        <Script id="theme-switcher" strategy="beforeInteractive">
+          {`
+    (function () {
+      try {
+        const theme = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (theme === "dark" || (!theme && prefersDark)) {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+      } catch (e) {
+        console.error("Theme load error:", e);
+      }
+    })();
+  `}
+        </Script>
+
         <Header />
         <main>{children}</main>
         <Footer />
