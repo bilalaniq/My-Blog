@@ -1,11 +1,19 @@
 "use client";
 import Link from "next/link";
 import Logo from "./logo";
-import { LinkedinIcon, GithubIcon, InstagramIcon, SunIcon } from "../icons";
+import {
+  LinkedinIcon,
+  GithubIcon,
+  InstagramIcon,
+  SunIcon,
+  MoonIcon,
+} from "../icons";
+
 import siteMetadata from "@/src/utils/siteMetadata";
 import { useThemeSwitch } from "../Hooks/useThemeSwitch";
 import { useState } from "react";
 import { set } from "date-fns";
+import { cx } from "@/src/utils";
 
 const Header = () => {
   const [mode, setMode] = useThemeSwitch();
@@ -74,12 +82,6 @@ const Header = () => {
         <Link href="/contact" className="mx-2">
           Contact
         </Link>
-        <button
-          onClick={() => setMode(mode === "dark" ? "light" : "dark")}
-          className="ml-2"
-        >
-          <SunIcon />
-        </button>
       </nav>
 
       <nav
@@ -97,9 +99,17 @@ const Header = () => {
         </Link>
         <button
           onClick={() => setMode(mode === "dark" ? "light" : "dark")}
-          className="ml-2"
+          className={cx(
+            "w-6 h-6 ease ml-2 flex items-center rounded-full p-1",
+            mode === "light" ? "bg-dark text-light" : "bg-light text-dark"
+          )}
         >
-          <SunIcon />
+          {/* <SunIcon /> */}
+          {mode === "light" ? (
+            <MoonIcon className={"fill-light"} />
+          ) : (
+            <SunIcon className={"fill-dark"} />
+          )}
         </button>
       </nav>
       <div className="hidden sm:flex items-center">

@@ -81,6 +81,41 @@ export default function BlogPage({ params }) {
   const blog = allBlogs.find((blog) => blog._raw.flattenedPath === params.slug);
   const imagePath = blog.image?.filePath?.replace("../public", "") || "";
 
+  let imageList = [siteMetadata.socialBanner];
+
+  if (blog.image) {
+    if (typeof blog.image === "string") {
+      imageList = [siteMetadata.url + blog.image.replace("../public", "")];
+    } else if (Array.isArray(blog.image)) {
+      imageList = blog.image;
+    } else if (blog.image?.filePath) {
+      imageList = [
+        siteMetadata.url + blog.image.filePath.replace("../public", ""),
+      ];
+    }
+  }
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    headline: blog.title,
+    image: imageList,
+    datePublished: "2024-01-05T08:00:00+08:00",
+    dateModified: "2024-02-05T09:20:00+08:00",
+    author: [
+      {
+        "@type": "Person",
+        name: "Jane Doe",
+        url: "https://example.com/profile/janedoe123",
+      },
+      {
+        "@type": "Person",
+        name: "John Doe",
+        url: "https://example.com/profile/johndoe123",
+      },
+    ],
+  };
+
   return (
     <article>
       <div className="mb-8 text-center relative w-full h-[70vh] bg-dark/60 dark:bg-dark/40 overflow-hidden">
@@ -93,6 +128,8 @@ export default function BlogPage({ params }) {
           width={blog.image?.width}
           height={blog.image?.height}
           className="absolute inset-0 w-full h-full object-cover object-center z-0"
+          priority
+          sizes="100vw"
         />
 
         <div className="absolute inset-0 bg-black/50 z-10" />

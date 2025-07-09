@@ -6,6 +6,7 @@ import Footer from "@/src/components/Footer";
 import { cx } from "@/src/utils";
 import siteMetadata from "../utils/siteMetadata";
 import Script from "next/script";
+import ThemeScript from "../components/ThemeScript";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -73,23 +74,7 @@ export default function RootLayout({ children }) {
           "font-mr bg-light dark:bg-dark"
         )}
       >
-        <Script id="theme-switcher" strategy="beforeInteractive">
-          {`
-    (function () {
-      try {
-        const theme = localStorage.getItem("theme");
-        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        if (theme === "dark" || (!theme && prefersDark)) {
-          document.documentElement.classList.add("dark");
-        } else {
-          document.documentElement.classList.remove("dark");
-        }
-      } catch (e) {
-        console.error("Theme load error:", e);
-      }
-    })();
-  `}
-        </Script>
+        <ThemeScript/>
 
         <Header />
         <main>{children}</main>
