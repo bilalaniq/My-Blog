@@ -23,6 +23,7 @@ function BlogLayoutOne({ blog }) {
         height={blog.image?.height}
         className="w-full h-full object-center object-cover rounded-xl group-hover:scale-105 transition-all
           duration-300"
+          sizes=" (max-width: 1180px) 100vw, 50vw"
       />
       <div className="w-full absolute bottom-0 p-4 xs:p-6 sm:p-10 z-20">
         <Tag

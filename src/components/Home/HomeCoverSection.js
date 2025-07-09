@@ -32,6 +32,7 @@ export const HomeCoverSection = ({ blogs }) => {
           alt={latestBlog.title || "Cover Image"}
           fill
           className="w-full h-full object-center object-cover rounded-3xl -z-10"
+          priority
         />
 
         <div className="p-6  sm:p-8  md:p-12 lg:p-16 flex flex-col items-start justify-center w-full lg:w-3/4 text-white z-0">

@@ -15,9 +15,12 @@ export default function page() {
     <>
       <AboutCoverSection />
       <Skills />
-      <h2 className="self-start mx-20 font-semibold text-2xl mt-8 text-dark">
+      <h2 className="self-start mx-5 xs:mx-10 sm:mx-12  md:mx-16 lg:mx-20 font-semibold text-lg md:text-2xl mt-8 text-dark dark:text-light dark:font-normal">
         Have a project in mind? Reach out to me from{" "}
-        <Link href="/contact" className="!underline underline-offset-2">
+        <Link
+          href="/contact"
+          className="!underline underline-offset-2 text-accent dark:text-accentDark "
+        >
           here
         </Link>{" "}
         and let's make it happen!

@@ -111,7 +111,7 @@ export default function BlogPage({ params }) {
 
       <Blogdetails blog={blog} slug={params.slug} />
 
-      <div className="grid grid-cols-12 gap-y-8 lg:gap-8 sxl:gap-16 mt-8 px-10">
+      <div className="grid grid-cols-12 gap-y-8 lg:gap-8 sxl:gap-16 mt-8 px-5 md:px-10">
         <div className="col-span-12 lg:col-span-4">
           <details
             className="border-[1px] border-solid border-dark dark:border-light text-dark dark:text-light rounded-lg p-4 sticky top-6
@@ -129,21 +129,22 @@ export default function BlogPage({ params }) {
                       href={`#${heading.slug}`}
                       data-level={heading.level}
                       className="data-[level=two]:pl-0 data-[level=two]:pt-2
-                    data-[level=two]:border-t border-solid border-dark/40
+                    data-[level=two]:border-t border-solid border-dark/40 dark:border-light/40
                     
-                    data-[level=three]:pl-6
+                    data-[level=three]:pl-4
+                    sm:data-[level=three]:pl-6
                     flex items-center justify-start
                     "
                     >
                       {heading.level === "three" ? (
-                        <span className="flex w-1 h-1 rounded-full bg-dark mr-2">
+                        <span className="flex w-1 h-1 rounded-full bg-dark dark:bg-light mr-2">
                           &nbsp;
                         </span>
                       ) : null}
                       {/* used for adding the bullpoints*/}
 
                       <a href={`#${heading.slug}`} className="group">
-                        <span className="group-hover:text-[#7B00D3] hover:underline">
+                        <span className="group-hover:text-[#7B00D3] hover:underline dark:group-hover:text-accentDark">
                           {heading.text}
                         </span>
                       </a>
