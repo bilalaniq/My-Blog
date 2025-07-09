@@ -14,7 +14,8 @@ export function Tag({ link = "#", name, className = "" }) {
     <Link
       href={finalLink}
       className={cx(
-        "inline-block py-3 px-10 bg-dark text-light rounded-full capitalize font-semibold border-2 border-light hover:scale-105 transition-all ease duration-200",
+        `inline-block py-2 sm:py-3 px-6 sm:px-10 bg-dark text-light rounded-full capitalize font-semibold border-2
+         border-light hover:scale-105 transition-all ease duration-200 text-sm sm:text-base`,
         className
       )}
     >

@@ -83,7 +83,7 @@ export default function BlogPage({ params }) {
 
   return (
     <article>
-      <div className="mb-8 text-center relative w-full h-[70vh] bg-dark overflow-hidden">
+      <div className="mb-8 text-center relative w-full h-[70vh] bg-dark/60 dark:bg-dark/40 overflow-hidden">
         {/* Background image */}
         <Image
           src={imagePath}
@@ -111,10 +111,10 @@ export default function BlogPage({ params }) {
 
       <Blogdetails blog={blog} slug={params.slug} />
 
-      <div className="grid grid-cols-12 gap-16 mt-8 px-10">
-        <div className="col-span-4">
+      <div className="grid grid-cols-12 gap-y-8 lg:gap-8 sxl:gap-16 mt-8 px-10">
+        <div className="col-span-12 lg:col-span-4">
           <details
-            className="border-[1px] border-solid border-dark text-dark rounded-lg p-4 sticky top-6
+            className="border-[1px] border-solid border-dark dark:border-light text-dark dark:text-light rounded-lg p-4 sticky top-6
           max-h-[120vh] overflow-hidden overflow-y-auto"
             open
           >

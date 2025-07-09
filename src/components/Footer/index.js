@@ -15,33 +15,41 @@ const Footer = () => {
   const onSubmit = (data) => console.log(data);
 
   return (
-    <footer className="mt-16 rounded-2xl bg-dark m-10 flex flex-col items-center text-light">
-      <h3 className="text-4xl px-4 font-medium capitalize mb-2 mt-16">
-        My Blog
+    <footer className="mt-16 rounded-2xl bg-dark dark:bg-accentDark/90 m-2 sm:m-10 flex flex-col items-center text-light dark:text-dark">
+      <h3 className=" text-2xl sm:text-3xl lg:text-4xl px-4 font-medium capitalize mb-2 mt-16 flex items-center justify-center gap-4">
+        <span>Stories</span>
+        <span className="text-5xl font-bold leading-none">|</span>
+        <span>Guides</span>
+        <span className="text-5xl font-bold leading-none">|</span>
+        <span>Updates</span>
       </h3>
-      <p className="mt-5 px-4 text-center w-3/5 font-light text-base">
-        &copy; {new Date().getFullYear()} Bilal. All rights reserved.
+
+      <p className="mt-5 px-4 text-center w-full sm:w-3/5 font-light dark:font-medium text-sm sm:text-base">
+        Subscribe to stay sharp — stories, guides, and updates, straight to you.
       </p>
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="mt-6 min-w-[384px] flex items-stretch bg-light rounded p-2 mx-40"
+        className="mt-6 w-full max-w-[90%] sm:max-w-sm flex items-stretch bg-light rounded p-2 sm:p-2.5 mx-auto"
       >
         <input
           type="email"
           placeholder="Enter your email"
           {...register("email", { required: "Email is required" })}
-          className="bg-transparent w-full pl-0 text-dark focus:border-dark focus:ring-0 border-0 border-b  mr-2 pd-1"
+          className="bg-transparent text-dark text-sm sm:text-base focus:border-dark focus:ring-0 border-0 border-b border-dark mr-1.5 py-1 px-2 w-[65%] sm:w-full"
         />
-        {errors.email && (
-          <span className="text-red-500 text-sm">{errors.email.message}</span>
-        )}
         <input
           type="submit"
           value="Subscribe"
-          className="bg-dark text-light cursor-pointer font-medium rounded px-5 py-1"
+          className="bg-dark text-light cursor-pointer font-medium rounded text-sm sm:text-base px-2 sm:px-4 py-1 sm:py-1.5 w-[35%] sm:w-auto"
         />
       </form>
+
+      {errors.email && (
+        <span className="text-red-500 text-sm mt-2 block text-center">
+          {errors.email.message}
+        </span>
+      )}
 
       <div className="flex items-center mt-8 gap-x-4">
         <a
@@ -58,7 +66,7 @@ const Footer = () => {
           rel="noopener noreferrer"
           className="transition-transform transform hover:scale-125"
         >
-          <GithubIcon className="w-6 h-6 fill-light" />
+          <GithubIcon className="w-6 h-6 fill-light dark:fill-dark" />
         </a>
         <a
           href={siteMetadata.instagram}
@@ -70,7 +78,7 @@ const Footer = () => {
         </a>
       </div>
 
-      <div className="mt-24 w-full relative font-medium border-t border-solid border-light py-6 px-8">
+      <div className="mt-16 md:mt-24 w-full relative font-medium border-t border-solid border-light py-6 px-8">
         <div className="flex flex-col md:flex-row items-center justify-between w-full text-center gap-4">
           <span className="md:text-left w-full md:w-1/3">
             &copy; {new Date().getFullYear()} Bilal. All rights reserved.
