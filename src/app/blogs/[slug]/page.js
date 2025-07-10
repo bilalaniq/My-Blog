@@ -99,101 +99,106 @@ export default function BlogPage({ params }) {
     "@context": "https://schema.org",
     "@type": "NewsArticle",
     headline: blog.title,
+    description: blog.description,
     image: imageList,
-    datePublished: "2024-01-05T08:00:00+08:00",
-    dateModified: "2024-02-05T09:20:00+08:00",
+    datePublished: new Date(blog.publishedAt).toISOString(),
+    dateModified: new Date(blog.updatedAt || blog.publishedAt).toISOString(),
     author: [
       {
         "@type": "Person",
-        name: "Jane Doe",
-        url: "https://example.com/profile/janedoe123",
-      },
-      {
-        "@type": "Person",
-        name: "John Doe",
-        url: "https://example.com/profile/johndoe123",
+        name: blog?.author || siteMetadata.author,
+        url: siteMetadata.linkedin,
       },
     ],
   };
 
   return (
-    <article>
-      <div className="mb-8 text-center relative w-full h-[70vh] bg-dark/60 dark:bg-dark/40 overflow-hidden">
-        {/* Background image */}
-        <Image
-          src={imagePath}
-          placeholder="blur"
-          blurDataURL={blog.image?.blurhashDataUrl || ""}
-          alt={blog.title || "Cover Image"}
-          width={blog.image?.width}
-          height={blog.image?.height}
-          className="absolute inset-0 w-full h-full object-cover object-center z-0"
-          priority
-          sizes="100vw"
-        />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
 
-        <div className="absolute inset-0 bg-black/50 z-10" />
-
-        <div className="w-full z-20 relative flex flex-col items-center justify-center h-full">
-          <Tag
-            className="px-6 text-sm py-2"
-            name={blog.tags[0]}
-            link={`/categories/${blog.tags[0]}`}
+      <article>
+        <div className="mb-8 text-center relative w-full h-[70vh] bg-dark/60 dark:bg-dark/40 overflow-hidden">
+          {/* Background image */}
+          <Image
+            src={imagePath}
+            placeholder="blur"
+            blurDataURL={blog.image?.blurhashDataUrl || ""}
+            alt={blog.title || "Cover Image"}
+            width={blog.image?.width}
+            height={blog.image?.height}
+            className="absolute inset-0 w-full h-full object-cover object-center z-0"
+            priority
+            sizes="100vw"
           />
-          <h1 className="inline-block mt-6 font-semibold capitalize text-light text-2xl md:text-3xl lg:text-5xl !leading-normal w-5/6">
-            {blog.title}
-          </h1>
+
+          <div className="absolute inset-0 bg-black/50 z-10" />
+
+          <div className="w-full z-20 relative flex flex-col items-center justify-center h-full">
+            <Tag
+              className="px-6 text-sm py-2"
+              name={blog.tags[0]}
+              link={`/categories/${blog.tags[0]}`}
+            />
+            <h1 className="inline-block mt-6 font-semibold capitalize text-light text-2xl md:text-3xl lg:text-5xl !leading-normal w-5/6">
+              {blog.title}
+            </h1>
+          </div>
         </div>
-      </div>
 
-      <Blogdetails blog={blog} slug={params.slug} />
+        <Blogdetails blog={blog} slug={params.slug} />
 
-      <div className="grid grid-cols-12 gap-y-8 lg:gap-8 sxl:gap-16 mt-8 px-5 md:px-10">
-        <div className="col-span-12 lg:col-span-4">
-          <details
-            className="border-[1px] border-solid border-dark dark:border-light text-dark dark:text-light rounded-lg p-4 sticky top-6
+        <div className="grid grid-cols-12 gap-y-8 lg:gap-8 sxl:gap-16 mt-8 px-5 md:px-10">
+          <div className="col-span-12 lg:col-span-4">
+            <details
+              className="border-[1px] border-solid border-dark dark:border-light text-dark dark:text-light rounded-lg p-4 sticky top-6
           max-h-[120vh] overflow-hidden overflow-y-auto"
-            open
-          >
-            <summary className="text-lg font-semibold capitalize cursor-pointer">
-              Table of Content
-            </summary>
-            <ul className="mt-4 font-in text-base">
-              {blog.toc.map((heading) => {
-                return (
-                  <li key={`#${heading.slug}`} className="py-1">
-                    <a
-                      href={`#${heading.slug}`}
-                      data-level={heading.level}
-                      className="data-[level=two]:pl-0 data-[level=two]:pt-2
+              open
+            >
+              <summary className="text-lg font-semibold capitalize cursor-pointer">
+                Table of Content
+              </summary>
+              <ul className="mt-4 font-in text-base">
+                {blog.toc.map((heading) => {
+                  return (
+                    <li key={`#${heading.slug}`} className="py-1">
+                      <a
+                        href={`#${heading.slug}`}
+                        data-level={heading.level}
+                        className="data-[level=two]:pl-0 data-[level=two]:pt-2
                     data-[level=two]:border-t border-solid border-dark/40 dark:border-light/40
                     
                     data-[level=three]:pl-4
                     sm:data-[level=three]:pl-6
                     flex items-center justify-start
                     "
-                    >
-                      {heading.level === "three" ? (
-                        <span className="flex w-1 h-1 rounded-full bg-dark dark:bg-light mr-2">
-                          &nbsp;
-                        </span>
-                      ) : null}
-                      {/* used for adding the bullpoints*/}
+                      >
+                        {heading.level === "three" ? (
+                          <span className="flex w-1 h-1 rounded-full bg-dark dark:bg-light mr-2">
+                            &nbsp;
+                          </span>
+                        ) : null}
+                        {/* used for adding the bullpoints*/}
 
-                      <a href={`#${heading.slug}`} className="group">
-                        <span className="group-hover:text-[#7B00D3] hover:underline dark:group-hover:text-accentDark">
-                          {heading.text}
-                        </span>
+                        <a href={`#${heading.slug}`} className="group">
+                          <span className="group-hover:text-[#7B00D3] hover:underline dark:group-hover:text-accentDark">
+                            {heading.text}
+                          </span>
+                        </a>
                       </a>
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
-          </details>
+                    </li>
+                  );
+                })}
+              </ul>
+            </details>
+          </div>
+          <RenderMdx blog={blog} />
         </div>
-        <RenderMdx blog={blog} />
-      </div>
-    </article>
+      </article>
+    </>
   );
 }
