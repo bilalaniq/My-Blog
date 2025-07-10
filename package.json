@@ -1,9 +1,12 @@
 {
+  "homepage": "https://NullSect.github.io/NullSect",
   "name": "developer-blog-starter-code",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d out",
     "build": "next build",
     "postbuild": "next-sitemap",
     "start": "next start",
@@ -41,6 +44,7 @@
   },
   "devDependencies": {
     "encoding": "^0.1.13",
+    "gh-pages": "^6.3.0",
     "sharp": "^0.32.6"
   }
 }

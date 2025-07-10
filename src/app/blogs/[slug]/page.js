@@ -11,11 +11,9 @@ import Image from "next/image";
 // because in our blog we donot have dynamic blogs, we can generate static params which will help in performance
 
 export async function generateStaticParams() {
-  return allBlogs.map((blog) => {
-    {
-      slug: blog._raw.flattenedPath;
-    }
-  });
+  return allBlogs.map((blog) => ({
+    slug: blog._raw.flattenedPath,
+  }));
 }
 
 export async function generateMetadata({ params }) {
