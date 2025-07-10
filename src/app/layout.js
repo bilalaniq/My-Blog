@@ -5,8 +5,9 @@ import Header from "@/src/components/Header";
 import Footer from "@/src/components/Footer";
 import { cx } from "@/src/utils";
 import siteMetadata from "../utils/siteMetadata";
-import Script from "next/script";
 import ThemeScript from "../components/ThemeScript";
+
+
 
 const inter = Inter({
   subsets: ["latin"],
