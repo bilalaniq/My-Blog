@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://NULLSECT.com
+
+# Sitemaps
+Sitemap: https://NULLSECT.com/sitemap.xml
