@@ -4,7 +4,16 @@ import { DotLottiePlayer } from "@lottiefiles/dotlottie-react";
 import "@lottiefiles/dotlottie-react/dist/index.css";
 
 const LottieAnimation = () => {
-  return <DotLottiePlayer src="/animation1.lottie" autoplay loop />;
+  return (
+    <div className="w-full max-w-md mx-auto">
+      <DotLottiePlayer
+        src="/animation1.lottie"
+        autoplay
+        loop
+        style={{ width: "100%", height: "auto" }}
+      />
+    </div>
+  );
 };
 
 export default LottieAnimation;

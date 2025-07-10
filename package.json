@@ -13,7 +13,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@dotlottie/react-player": "^1.2.0",
+    "@lottiefiles/dotlottie-react": "^0.14.2",
     "@react-three/drei": "9.80.0",
     "@react-three/fiber": "8.13.7",
     "@supabase/ssr": "^0.6.1",
