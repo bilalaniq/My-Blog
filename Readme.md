@@ -16,3 +16,6 @@
   </p>
 </article>
 ``` -->
+
+
+git hub does not allow dynamic routing so i am leaving it here and moving my project to Vercel
