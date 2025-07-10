@@ -1,15 +1,11 @@
-/** @type {import('next').NextConfig} */
-
 const { withContentlayer } = require('next-contentlayer');
 
-const repoName = 'NullSect'; // 👈 MUST match your GitHub repo name exactly (case-sensitive)
-
 const nextConfig = {
-  output: 'export',
-  basePath: `/${repoName}`,
-  assetPrefix: `/${repoName}/`,
+  output: 'export',                   // for static export (out/ folder)
+  basePath: '/NullSect',             // important for GitHub Pages
+  assetPrefix: '/NullSect/',         // also important
   images: {
-    unoptimized: true,
+    unoptimized: true,               // needed for static export with next/image
   },
   compiler: {
     removeConsole: true,
