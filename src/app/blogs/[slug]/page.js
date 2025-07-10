@@ -5,33 +5,29 @@ import { Tag } from "@/src/components/Elements/Tags";
 import siteMetadata from "@/src/utils/siteMetadata";
 import Image from "next/image";
 
-// Generate static paths for all blog slugs
+// Pre-generate static paths for all blogs
 export async function generateStaticParams() {
   return allBlogs.map((blog) => ({
     slug: blog._raw.flattenedPath,
   }));
 }
 
-// Generate metadata for SEO and social sharing
+// Metadata for SEO and social sharing
 export async function generateMetadata({ params }) {
   const blog = allBlogs.find((b) => b._raw.flattenedPath === params.slug);
-  if (!blog) return;
+  if (!blog) return {};
 
   const publishedAt = new Date(blog.publishedAt).toISOString();
   const modifiedAt = new Date(blog.updatedAt || blog.publishedAt).toISOString();
 
   let imageList = [siteMetadata.socialBanner];
 
-  if (blog.image) {
-    if (typeof blog.image === "string") {
-      imageList = [siteMetadata.url + blog.image.replace("../public", "")];
-    } else if (Array.isArray(blog.image)) {
-      imageList = blog.image;
-    } else if (blog.image?.filePath) {
-      imageList = [
-        siteMetadata.url + blog.image.filePath.replace("../public", ""),
-      ];
-    }
+  if (typeof blog.image === "string") {
+    imageList = [siteMetadata.url + blog.image.replace("../public", "")];
+  } else if (Array.isArray(blog.image)) {
+    imageList = blog.image;
+  } else if (blog.image?.filePath) {
+    imageList = [siteMetadata.url + blog.image.filePath.replace("../public", "")];
   }
 
   const ogImage = imageList.map((img) => ({
@@ -40,7 +36,7 @@ export async function generateMetadata({ params }) {
     height: 630,
   }));
 
-  const author = blog?.author ? [blog.author] : siteMetadata.author;
+  const author = blog?.author ? [blog.author] : [siteMetadata.author];
 
   return {
     title: blog.title,
@@ -66,25 +62,21 @@ export async function generateMetadata({ params }) {
   };
 }
 
-// Main blog page component
+// Blog page component
 export default function BlogPage({ params }) {
   const blog = allBlogs.find((b) => b._raw.flattenedPath === params.slug);
-  if (!blog) return null;
+  if (!blog) return <div className="text-center mt-20">Blog not found.</div>;
 
   const imagePath = blog.image?.filePath?.replace("../public", "") || "";
   const hasImage = imagePath && blog.image?.width && blog.image?.height;
 
   let imageList = [siteMetadata.socialBanner];
-  if (blog.image) {
-    if (typeof blog.image === "string") {
-      imageList = [siteMetadata.url + blog.image.replace("../public", "")];
-    } else if (Array.isArray(blog.image)) {
-      imageList = blog.image;
-    } else if (blog.image?.filePath) {
-      imageList = [
-        siteMetadata.url + blog.image.filePath.replace("../public", ""),
-      ];
-    }
+  if (typeof blog.image === "string") {
+    imageList = [siteMetadata.url + blog.image.replace("../public", "")];
+  } else if (Array.isArray(blog.image)) {
+    imageList = blog.image;
+  } else if (blog.image?.filePath) {
+    imageList = [siteMetadata.url + blog.image.filePath.replace("../public", "")];
   }
 
   const jsonLd = {
@@ -146,7 +138,7 @@ export default function BlogPage({ params }) {
         <div className="grid grid-cols-12 gap-y-8 lg:gap-8 sxl:gap-16 mt-8 px-5 md:px-10">
           <div className="col-span-12 lg:col-span-4">
             <details
-              className="border-[1px] border-solid border-dark dark:border-light text-dark dark:text-light rounded-lg p-4 sticky top-6 max-h-[120vh] overflow-hidden overflow-y-auto"
+              className="border border-dark dark:border-light text-dark dark:text-light rounded-lg p-4 sticky top-6 max-h-[120vh] overflow-hidden overflow-y-auto"
               open
             >
               <summary className="text-lg font-semibold capitalize cursor-pointer">
@@ -154,12 +146,11 @@ export default function BlogPage({ params }) {
               </summary>
               <ul className="mt-4 font-in text-base">
                 {blog.toc?.map((heading) => (
-                  <li key={`#${heading.slug}`} className="py-1">
+                  <li key={heading.slug} className="py-1">
                     <a
                       href={`#${heading.slug}`}
                       data-level={heading.level}
-                      className="data-[level=two]:pl-0 data-[level=two]:pt-2
-                        data-[level=two]:border-t border-solid border-dark/40 dark:border-light/40
+                      className="data-[level=two]:pl-0 data-[level=two]:pt-2 data-[level=two]:border-t border-solid border-dark/40 dark:border-light/40
                         data-[level=three]:pl-4 sm:data-[level=three]:pl-6
                         flex items-center justify-start group"
                     >
