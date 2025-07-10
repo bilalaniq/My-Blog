@@ -1,14 +1,13 @@
-// app/layout.js or app/layout.tsx
+// app/layout.js
 import "./globals.css";
 import { Inter, Manrope } from "next/font/google";
 import Header from "@/src/components/Header";
 import Footer from "@/src/components/Footer";
 import { cx } from "@/src/utils";
-import siteMetadata from "../utils/siteMetadata";
-import ThemeScript from "../components/ThemeScript";
+import siteMetadata from "@/src/utils/siteMetadata";
+import ThemeScript from "@/src/components/ThemeScript";
 
-
-
+// Fonts with variable support and swap
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
@@ -21,11 +20,12 @@ const manrope = Manrope({
   variable: "--font-mr",
 });
 
+// SEO & Metadata config
 export const metadata = {
   metadataBase: new URL(siteMetadata.siteUrl),
   title: {
-    template: `%s | ${siteMetadata.title}`,
     default: siteMetadata.title,
+    template: `%s | ${siteMetadata.title}`,
   },
   description: siteMetadata.description,
   openGraph: {
@@ -49,7 +49,7 @@ export const metadata = {
     title: siteMetadata.title,
     description: siteMetadata.description,
     images: [siteMetadata.socialBanner || siteMetadata.siteLogo],
-    creator: siteMetadata.twitter || undefined,
+    creator: siteMetadata.twitter || "",
   },
   robots: {
     index: true,
@@ -65,6 +65,7 @@ export const metadata = {
   },
 };
 
+// Root Layout component
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
@@ -75,8 +76,7 @@ export default function RootLayout({ children }) {
           "font-mr bg-light dark:bg-dark"
         )}
       >
-        <ThemeScript/>
-
+        <ThemeScript />
         <Header />
         <main>{children}</main>
         <Footer />
