@@ -7,7 +7,7 @@ import {
   InstagramIcon,
   SunIcon,
   MoonIcon,
-} from "../icons";
+} from "../Icons";
 
 import siteMetadata from "@/src/utils/siteMetadata";
 import { useThemeSwitch } from "../Hooks/useThemeSwitch";
