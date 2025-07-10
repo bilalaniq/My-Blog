@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { DotLottiePlayer } from "@lottiefiles/dotlottie-react";
-import "@lottiefiles/dotlottie-react/dist/index.css";
 
 const LottieAnimation = () => {
   return (
