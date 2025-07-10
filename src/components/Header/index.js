@@ -11,13 +11,17 @@ import {
 
 import siteMetadata from "@/src/utils/siteMetadata";
 import { useThemeSwitch } from "../Hooks/useThemeSwitch";
-import { useState } from "react";
-import { set } from "date-fns";
+import { useEffect, useState } from "react";
 import { cx } from "@/src/utils";
 
 const Header = () => {
   const [mode, setMode] = useThemeSwitch();
   const [click, setClick] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false); // Fix for hydration issue
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   const toggleMenu = () => {
     setClick(!click);
@@ -28,11 +32,10 @@ const Header = () => {
       <Logo />
 
       <button className="inline-block sm:hidden z-50" onClick={toggleMenu}>
-        <div className="w-6  cursor-pointer transition-all ease duration-300">
+        <div className="w-6 cursor-pointer transition-all ease duration-300">
           <div className="relative">
             <span
-              className="absolute top-0 inline-block w-full h-0.5 bg-dark dark:bg-light rounded transition-all
-          ease duration-200"
+              className="absolute top-0 inline-block w-full h-0.5 bg-dark dark:bg-light rounded transition-all ease duration-200"
               style={{
                 transform: click
                   ? "rotate(-45deg) translateY(0)"
@@ -42,8 +45,7 @@ const Header = () => {
               &nbsp;
             </span>
             <span
-              className="absolute top-0 inline-block w-full h-0.5 bg-dark dark:bg-light rounded transition-all
-          ease duration-200"
+              className="absolute top-0 inline-block w-full h-0.5 bg-dark dark:bg-light rounded transition-all ease duration-200"
               style={{
                 opacity: click ? 0 : 1,
               }}
@@ -51,8 +53,7 @@ const Header = () => {
               &nbsp;
             </span>
             <span
-              className="absolute top-0 inline-block w-full h-0.5 bg-dark dark:bg-light rounded transition-all
-          ease duration-200"
+              className="absolute top-0 inline-block w-full h-0.5 bg-dark dark:bg-light rounded transition-all ease duration-200"
               style={{
                 transform: click
                   ? "rotate(45deg) translateY(0)"
@@ -66,9 +67,8 @@ const Header = () => {
       </button>
 
       <nav
-        className="w-max py-3 px-6 sm:px-8 border border-solid border-dark rounded-full font-medium capitalize  items-center 
-      fixed top-6 right-1/2 translate-x-1/2 bg-light/80 backdrop-blur-sm z-50 flex sm:hidden
-       transition-all ease duration-300"
+        className="w-max py-3 px-6 sm:px-8 border border-solid border-dark rounded-full font-medium capitalize items-center 
+        fixed top-6 right-1/2 translate-x-1/2 bg-light/80 backdrop-blur-sm z-50 flex sm:hidden transition-all ease duration-300"
         style={{
           top: click ? "1rem" : "-5rem",
         }}
@@ -85,8 +85,8 @@ const Header = () => {
       </nav>
 
       <nav
-        className="w-max py-3 px-8 border border-solid border-dark rounded-full font-medium capitalize  items-center 
-      fixed top-6 right-1/2 translate-x-1/2 bg-light/80 backdrop-blur-sm z-50 hidden sm:flex "
+        className="w-max py-3 px-8 border border-solid border-dark rounded-full font-medium capitalize items-center 
+        fixed top-6 right-1/2 translate-x-1/2 bg-light/80 backdrop-blur-sm z-50 hidden sm:flex"
       >
         <Link href="/" className="mr-2">
           Home
@@ -104,14 +104,15 @@ const Header = () => {
             mode === "light" ? "bg-dark text-light" : "bg-light text-dark"
           )}
         >
-          {/* <SunIcon /> */}
-          {mode === "light" ? (
-            <MoonIcon className={"fill-light"} />
-          ) : (
-            <SunIcon className={"fill-dark"} />
-          )}
+          {hasMounted &&
+            (mode === "light" ? (
+              <MoonIcon className="fill-light" />
+            ) : (
+              <SunIcon className="fill-dark" />
+            ))}
         </button>
       </nav>
+
       <div className="hidden sm:flex items-center">
         <a href={siteMetadata.linkedin} className="inline-block w-6 h-6 mr-4">
           <LinkedinIcon className="hover:scale-125 transition-all ease duration-200" />
