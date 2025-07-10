@@ -1,65 +1,65 @@
-    "use client";
-    import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-    import React, { useEffect, useState } from "react";
+"use client";
 
-    const supabase = createClientComponentClient();
+import React, { useEffect, useState } from "react";
+import { createBrowserClient } from "@supabase/ssr";
 
-    const ViewCounter = ({ slug, noCount = false, showCount = true }) => {
-    const [views, setViews] = useState(0);
+const supabase = createBrowserClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+);
 
-    useEffect(() => {
-        const incrementView = async () => {
-        try {
-            let { error } = await supabase.rpc("increment", {
-            slug_text: slug,
-            });
-            if (error) {
-            console.error("Error incrementing view count in try block:", error);
-            }
-        } catch (error) {
-            console.error("Error incrementing view count:", error);
+const ViewCounter = ({ slug, noCount = false, showCount = true }) => {
+  const [views, setViews] = useState(0);
+
+  useEffect(() => {
+    if (!slug || noCount) return;
+
+    const incrementView = async () => {
+      try {
+        const { error } = await supabase.rpc("increment", {
+          slug_text: slug,
+        });
+        if (error) {
+          console.error("Error incrementing view count:", error);
         }
-        };
-
-        if (!noCount) {
-        incrementView();
-        }
-    }, [slug, noCount]);
-
-    useEffect(() => {
-        const getView = async () => {
-        try {
-            let { data, error } = await supabase
-            .from("views")
-            .select("count")
-            .match({ slug: slug })
-            .single();
-            if (error) {
-            console.error("Error while geting view count in try block:", error);
-            }
-
-            console.log("Data fetched from views table:", data);
-            setViews(data ? data.count : 0);
-        } catch (error) {
-            console.error("Error while geting view count:", error);
-        }
-        };
-
-        getView();
-    }, [slug]);
-
-    if (showCount) {
-        return <div>{views} views</div>;
-    } else {
-        return null;
-    }
+      } catch (err) {
+        console.error("Unexpected error during increment:", err);
+      }
     };
 
-    export default ViewCounter;
+    incrementView();
+  }, [slug, noCount]);
 
+  useEffect(() => {
+    if (!slug) return;
 
+    const getViewCount = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("views")
+          .select("count")
+          .eq("slug", slug)
+          .single();
 
+        if (error) {
+          console.error("Error fetching view count:", error);
+        } else {
+          setViews(data?.count || 0);
+        }
+      } catch (err) {
+        console.error("Unexpected error fetching view count:", err);
+      }
+    };
 
+    getViewCount();
+  }, [slug]);
+
+  if (!showCount) return null;
+
+  return <div>{views.toLocaleString()} views</div>;
+};
+
+export default ViewCounter;
 
 //  React 18+ (especially in Next.js 13+ with the App Router) runs useEffect twice on purpose in development to help catch bugs.
 
