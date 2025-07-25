@@ -18,4 +18,4 @@
 ``` -->
 
 
-git hub does not allow dynamic routing so i am leaving it here and moving my project to Vercel
+jsut an blog web app written in next.js framework
